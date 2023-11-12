@@ -642,7 +642,6 @@ cmp.setup {
 }
 
 -- Run gofmt + goimport on save
-
 local format_sync_grp = vim.api.nvim_create_augroup("GoImport", {})
 vim.api.nvim_create_autocmd("BufWritePre", {
   pattern = "*.go",
@@ -651,6 +650,11 @@ vim.api.nvim_create_autocmd("BufWritePre", {
   end,
   group = format_sync_grp,
 })
+
+-- GitCommit command
+vim.api.nvim_create_user_command("GitCommit",
+  '!git commit --signoff -m "$(gitmojify -m ' ..
+  vim.fn.shellescape("<args>") .. ' || echo ' .. vim.fn.shellescape("<args>") .. ')"', { nargs = '*' })
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
