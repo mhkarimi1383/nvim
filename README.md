@@ -2,12 +2,10 @@
 
 > Based on [kickstart.nvim](https://github.com/nvim-lua/kickstart.nvim)
 
-https://github.com/kdheepak/kickstart.nvim/assets/1813121/f3ff9a2b-c31f-44df-a4fa-8a0d7b17cf7b
-
 ### Installation
 
 > **NOTE** 
-> [Backup](#FAQ) your previous configuration (if any exists)
+> Backup your previous configuration (if any exists)
 
 Requirements:
 * Make sure to review the readmes of the plugins if you are experiencing errors. In particular:
