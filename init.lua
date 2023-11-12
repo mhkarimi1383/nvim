@@ -519,6 +519,7 @@ require('lspconfig').bashls.setup {}
 require('lspconfig').ansiblels.setup {}
 require('lspconfig').dockerls.setup {}
 require('lspconfig').marksman.setup {}
+require('lspconfig').grammarly.setup {}
 require('lspconfig').jsonls.setup {
   settings = {
     json = {
