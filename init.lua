@@ -1,52 +1,6 @@
---[[
-
-=====================================================================
-==================== READ THIS BEFORE CONTINUING ====================
-=====================================================================
-
-Kickstart.nvim is *not* a distribution.
-
-Kickstart.nvim is a template for your own configuration.
-  The goal is that you can read every line of code, top-to-bottom, understand
-  what your configuration is doing, and modify it to suit your needs.
-
-  Once you've done that, you should start exploring, configuring and tinkering to
-  explore Neovim!
-
-  If you don't know anything about Lua, I recommend taking some time to read through
-  a guide. One possible example:
-  - https://learnxinyminutes.com/docs/lua/
-
-
-  And then you can explore or search through `:help lua-guide`
-  - https://neovim.io/doc/user/lua-guide.html
-
-
-Kickstart Guide:
-
-I have left several `:help X` comments throughout the init.lua
-You should run that command and read that help section for more information.
-
-In addition, I have some `NOTE:` items throughout the file.
-These are for you, the reader to help understand what is happening. Feel free to delete
-them once you know what you're doing, but they should serve as a guide for when you
-are first encountering a few different constructs in your nvim config.
-
-I hope you enjoy your Neovim journey,
-- TJ
-
-P.S. You can delete this when you're done too. It's your config now :)
---]]
-
--- Set <space> as the leader key
--- See `:help mapleader`
---  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
--- [[ Install `lazy.nvim` plugin manager ]]
---    https://github.com/folke/lazy.nvim
---    `:help lazy.nvim.txt` for more info
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system {
@@ -58,14 +12,9 @@ if not vim.loop.fs_stat(lazypath) then
     lazypath,
   }
 end
+
 vim.opt.rtp:prepend(lazypath)
 
--- [[ Configure plugins ]]
--- NOTE: Here is where you install your plugins.
---  You can configure plugins using the `config` key.
---
---  You can also configure plugins after the setup call,
---    as they will be available in your neovim runtime.
 require('lazy').setup({
   -- NOTE: First, some plugins that don't require any configuration
   {
@@ -78,7 +27,7 @@ require('lazy').setup({
       vim.g.adwaita_darker = true             -- for darker version
       vim.g.adwaita_disable_cursorline = true -- to disable cursorline
       vim.g.adwaita_transparent = true        -- makes the background transparent
-      vim.cmd('colorscheme adwaita')
+      -- vim.cmd('colorscheme adwaita')
     end
   },
   -- Git related plugins
@@ -122,7 +71,12 @@ require('lazy').setup({
       'rafamadriz/friendly-snippets',
     },
   },
-
+  {
+    "jesseleite/nvim-noirbuddy",
+    dependencies = {
+      "tjdevries/colorbuddy.nvim", branch = "dev"
+    }
+  },
   -- Useful plugin to show you pending keybinds.
   { 'folke/which-key.nvim',  opts = {} },
   {
@@ -163,29 +117,18 @@ require('lazy').setup({
       end,
     },
   },
-
-  {
-    -- Theme inspired by Atom
-    'navarasu/onedark.nvim',
-    priority = 1000,
-    config = function()
-    end,
-  },
-
   {
     -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
     -- See `:help lualine.txt`
     opts = {
       options = {
-        icons_enabled = false,
-        theme = 'adwaita',
+        icons_enabled = true,
         component_separators = '|',
         section_separators = '',
       },
     },
   },
-
   {
     -- Add indentation guides even on blank lines
     'lukas-reineke/indent-blankline.nvim',
@@ -194,10 +137,8 @@ require('lazy').setup({
     main = 'ibl',
     opts = {},
   },
-
   -- "gc" to comment visual regions/lines
   { 'numToStr/Comment.nvim', opts = {} },
-
   -- Fuzzy Finder (files, lsp, etc)
   {
     'nvim-telescope/telescope.nvim',
@@ -218,7 +159,6 @@ require('lazy').setup({
       },
     },
   },
-
   {
     -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
@@ -325,6 +265,19 @@ require('telescope').setup {
   },
 }
 
+require("noirbuddy").setup()
+
+local noirbuddy_lualine = require('noirbuddy.plugins.lualine')
+
+require('lualine').setup {
+  options = {
+    theme = noirbuddy_lualine.theme,
+    -- ...
+  },
+  sections = noirbuddy_lualine.sections,
+  inactive_sections = noirbuddy_lualine.inactive_sections,
+}
+
 -- Enable telescope fzf native, if installed
 pcall(require('telescope').load_extension, 'fzf')
 
@@ -392,9 +345,30 @@ vim.defer_fn(function()
     -- Add languages to be installed here that you want installed for treesitter
     ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim', 'bash' },
 
+    rainbow = {
+      enable = true,
+      -- list of languages you want to disable the plugin for
+      disable = { 'jsx', 'cpp' },
+      -- Which query to use for finding delimiters
+      query = 'rainbow-parens',
+      -- Highlight the entire buffer all at once
+      strategy = require('ts-rainbow').strategy.global,
+    },
+
     -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
     auto_install = false,
-
+    refactor = {
+      navigation = {
+        enable = true,
+        keymaps = {
+          goto_definition = "gnd",
+          list_definitions = "gnD",
+          list_definitions_toc = "gO",
+          goto_next_usage = "<a-*>",
+          goto_previous_usage = "<a-#>",
+        },
+      },
+    },
     highlight = { enable = true },
     indent = { enable = true },
     incremental_selection = {
@@ -473,10 +447,12 @@ local on_attach = function(_, bufnr)
   nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
   nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
-  nmap('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
-  nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
-  nmap('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
-  nmap('<leader>D', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
+  -- nmap('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
+  -- nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
+  -- nmap('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
+  -- nmap('<leader>D', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
+  vim.api.nvim_set_keymap("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", { noremap = true, silent = true })
+  vim.api.nvim_set_keymap("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", { noremap = true, silent = true })
   nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
   nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
