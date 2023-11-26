@@ -342,7 +342,6 @@ vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = 
 -- Defer Treesitter setup after first render to improve startup time of 'nvim {filename}'
 vim.defer_fn(function()
   require('nvim-treesitter.configs').setup {
-    -- Add languages to be installed here that you want installed for treesitter
     ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim', 'bash' },
 
     rainbow = {
@@ -447,10 +446,10 @@ local on_attach = function(_, bufnr)
   nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
   nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
-  -- nmap('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
-  -- nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
-  -- nmap('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
-  -- nmap('<leader>D', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
+  nmap('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
+  nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
+  nmap('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
+  nmap('<leader>D', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
   vim.api.nvim_set_keymap("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", { noremap = true, silent = true })
   vim.api.nvim_set_keymap("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", { noremap = true, silent = true })
   nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
@@ -485,57 +484,33 @@ require('which-key').register {
   ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
 }
 
--- mason-lspconfig requires that these setup functions are called in this order
--- before setting up the servers.
 require('mason').setup()
 require('mason-lspconfig').setup()
-require('lspconfig').pyright.setup {}
-require('lspconfig').gopls.setup {}
-require('lspconfig').bashls.setup {}
-require('lspconfig').ansiblels.setup {}
-require('lspconfig').dockerls.setup {}
-require('lspconfig').marksman.setup {}
-require('lspconfig').grammarly.setup {}
-require('lspconfig').jsonls.setup {
-  settings = {
+
+local servers = {
+  nginx_language_server = {},
+  bashls = {},
+  ansiblels = {},
+  dockerls = {},
+  marksman = {},
+  grammarly = {},
+  gopls = {},
+  pyright = {},
+  jsonls = {
     json = {
       schemas = require('schemastore').json.schemas(),
       validate = { enable = true },
     },
   },
-}
-
-require('lspconfig').yamlls.setup {
-  settings = {
+  yamlls = {
     yaml = {
       schemaStore = {
-        -- You must disable built-in schemaStore support if you want to use
-        -- this plugin and its advanced options like `ignore`.
         enable = false,
-        -- Avoid TypeError: Cannot read properties of undefined (reading 'length')
         url = "",
       },
       schemas = require('schemastore').yaml.schemas(),
     },
   },
-}
-
--- Enable the following language servers
---  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
---
---  Add any additional override configuration in the following tables. They will be passed to
---  the `settings` field of the server config. You must look up that documentation yourself.
---
---  If you want to override the default filetypes that your language server will attach to you can
---  define the property 'filetypes' to the map in question.
-local servers = {
-  -- clangd = {},
-  -- gopls = {},
-  -- pyright = {},
-  -- rust_analyzer = {},
-  -- tsserver = {},
-  -- html = { filetypes = { 'html', 'twig', 'hbs'} },
-
   lua_ls = {
     Lua = {
       workspace = { checkThirdParty = false },
@@ -544,6 +519,15 @@ local servers = {
   },
 }
 
+local langservers = {}
+local excluded_langservers_from_installer = { nginx_language_server = true }
+
+for key, _ in pairs(servers) do
+  if (excluded_langservers_from_installer[key] or false) ~= true then
+    table.insert(langservers, key)
+  end
+end
+
 -- Setup neovim lua configuration
 require('neodev').setup()
 
@@ -551,11 +535,9 @@ require('neodev').setup()
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
--- Ensure the servers above are installed
 local mason_lspconfig = require 'mason-lspconfig'
-
 mason_lspconfig.setup {
-  ensure_installed = vim.tbl_keys(servers),
+  ensure_installed = langservers,
 }
 
 mason_lspconfig.setup_handlers {
@@ -614,18 +596,9 @@ cmp.setup {
   sources = {
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
+    { name = 'nvim_lsp' }
   },
 }
-
--- Run gofmt + goimport on save
-local format_sync_grp = vim.api.nvim_create_augroup("GoImport", {})
-vim.api.nvim_create_autocmd("BufWritePre", {
-  pattern = "*.go",
-  callback = function()
-    require('go.format').goimport()
-  end,
-  group = format_sync_grp,
-})
 
 -- GitCommit command
 vim.api.nvim_create_user_command("GitCommit",
