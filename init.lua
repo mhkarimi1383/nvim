@@ -596,7 +596,6 @@ cmp.setup {
   sources = {
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
-    { name = 'nvim_lsp' }
   },
 }
 
@@ -604,6 +603,9 @@ cmp.setup {
 vim.api.nvim_create_user_command("GitCommit",
   '!git commit --signoff -m "$(gitmojify -m ' ..
   vim.fn.shellescape("<args>") .. ' || echo ' .. vim.fn.shellescape("<args>") .. ')"', { nargs = '*' })
+
+local wilder = require('wilder')
+wilder.setup({ modes = { ':', '/', '?' } })
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
