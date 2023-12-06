@@ -43,7 +43,7 @@ require('lazy').setup({
     },
   },
   {
-    'rafamadriz/neon'
+    'Mofiqul/dracula.nvim'
   },
   { 'folke/which-key.nvim',  opts = {} },
   {
@@ -123,10 +123,7 @@ require('lazy').setup({
   { import = 'custom.plugins' },
   { import = 'kickstart.plugins' },
 }, {})
-
-vim.g.neon_italic_keyword = true
-vim.g.neon_style = "dark"
-vim.cmd [[colorscheme neon]]
+vim.cmd [[colorscheme dracula]]
 vim.o.hlsearch = false
 vim.wo.number = true
 vim.o.mouse = 'a'
@@ -171,7 +168,7 @@ require('telescope').setup {
 
 require('lualine').setup {
   options = {
-    theme = "neon",
+    theme = "dracula-nvim",
   },
 }
 
