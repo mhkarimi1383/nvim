@@ -11,7 +11,29 @@ return {
   },
   config = function()
     require('neo-tree').setup {
+      close_if_last_window = true,
+      hijack_netrw_behavior = "open_default",
+      sources = {
+        "filesystem",
+        "buffers",
+        "git_status",
+        "document_symbols",
+      },
+      source_selector = {
+        winbar = true,
+        statusline = true,
+        show_scrolled_off_parent_node = true,
+        sources = {
+          { source = "filesystem" },
+          { source = "buffers" },
+          { source = "git_status" },
+          { source = "document_symbols" },
+        },
+      },
       filesystem = {
+        follow_current_file = {
+          enabled = true,
+        },
         filtered_items = {
           visible = true,
         },
