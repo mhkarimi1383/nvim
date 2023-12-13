@@ -4,7 +4,7 @@
 
 ### Installation
 
-> **NOTE** 
+> **NOTE**
 > Backup your previous configuration (if any exists)
 
 Requirements:
@@ -31,12 +31,12 @@ git clone https://github.com/mhkarimi1383/nvim.git "${XDG_CONFIG_HOME:-$HOME/.co
 
 ```
 # on Windows (cmd)
-git clone https://github.com/mhkarimi1383/nvim.git %userprofile%\AppData\Local\nvim\ 
+git clone https://github.com/mhkarimi1383/nvim.git %userprofile%\AppData\Local\nvim\
 ```
 
 ```
 # on Windows (powershell)
-git clone https://github.com/mhkarimi1383/nvim.git $env:USERPROFILE\AppData\Local\nvim\ 
+git clone https://github.com/mhkarimi1383/nvim.git $env:USERPROFILE\AppData\Local\nvim\
 ```
 
 
@@ -64,7 +64,7 @@ this directory is included in `init.lua` by default
 
 You can also merge updates/changes from the repo back into your fork, to keep up-to-date with any changes for the default configuration.
 
-Also inside `init.lua` you can see that nothing has been written directly and we have tried to make this configuration modular with the help of lua modules, etc.  
+Also inside `init.lua` you can see that nothing has been written directly and we have tried to make this configuration modular with the help of lua modules, etc.
 So, do not forget to follow this style :)
 
 
@@ -87,4 +87,3 @@ This requires:
 ```lua
 {'nvim-telescope/telescope-fzf-native.nvim', build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
 ```
-
