@@ -1,3 +1,3 @@
 return {
-  "gelguy/wilder.nvim"
+  'gelguy/wilder.nvim',
 }
