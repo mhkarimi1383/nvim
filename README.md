@@ -2,6 +2,8 @@
 
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/mhkarimi1383/nvim/main.svg)](https://results.pre-commit.ci/latest/github/mhkarimi1383/nvim/main)
 
+![Screenshot](./assets/screenshot.png)
+
 > Based on [kickstart.nvim](https://github.com/nvim-lua/kickstart.nvim)
 
 ### Installation
