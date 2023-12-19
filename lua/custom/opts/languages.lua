@@ -141,6 +141,7 @@ function _M.setup()
     },
     sources = {
       { name = 'nvim_lsp' },
+      { name = 'path' },
     },
   }
 end
