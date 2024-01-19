@@ -12,6 +12,7 @@ local servers = {
   dockerls = {},
   marksman = {},
   grammarly = {},
+  sqlls = {},
   gopls = {},
   pyright = {},
   jsonls = {
