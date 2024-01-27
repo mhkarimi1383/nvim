@@ -60,6 +60,11 @@ If you would prefer to hide this step and run the plugin sync from the command l
 nvim --headless "+Lazy! sync" +qa
 ```
 
+### Recommended Setup
+
+Font: `VictorMoto Nerd Font Mono`
+Terminal: `BlackBox` (**NOTE**: Font regulations are not supported)
+
 ### Configuration And Extension
 
 add/modify any required plugin in `lua/custom/plugins/`
