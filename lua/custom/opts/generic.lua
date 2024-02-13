@@ -15,6 +15,8 @@ function _M.setup()
   vim.o.timeoutlen = 300
   vim.o.completeopt = 'menuone,noselect'
   vim.o.termguicolors = true
+  vim.o.guicursor =
+    'n-v-c-sm:block,i-ci-ve:hor25,r-cr-o:hor20,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor,sm:block-blinkwait175-blinkoff150-blinkon175'
   vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
   vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
   vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })

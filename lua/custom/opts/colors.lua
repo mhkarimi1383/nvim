@@ -5,11 +5,11 @@ local rainbow_delimiters = require 'rainbow-delimiters'
 local _M = {}
 
 function _M.setup()
-  vim.cmd [[colorscheme horizon]]
+  vim.cmd 'colorscheme dracula'
   vim.o.background = 'dark'
   lualine.setup {
     options = {
-      theme = 'horizon',
+      theme = 'dracula',
     },
   }
   vim.g.rainbow_delimiters = {
