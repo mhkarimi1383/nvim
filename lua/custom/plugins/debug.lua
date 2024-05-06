@@ -9,6 +9,7 @@
 return {
   'mfussenegger/nvim-dap',
   dependencies = {
+    'nvim-neotest/nvim-nio',
     -- Creates a beautiful debugger UI
     'rcarriga/nvim-dap-ui',
 

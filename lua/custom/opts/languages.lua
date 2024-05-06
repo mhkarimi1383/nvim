@@ -7,11 +7,19 @@ local _M = {}
 
 local servers = {
   nginx_language_server = {},
+  earthlyls = {},
+  volar = {
+    filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json' },
+  },
+  pylsp = {},
+  pyre = {},
+  helm_ls = {},
   bashls = {},
   ansiblels = {},
   dockerls = {},
   marksman = {},
   grammarly = {},
+  phpactor = {},
   sqlls = {},
   gopls = {},
   pyright = {},
@@ -27,12 +35,19 @@ local servers = {
         enable = false,
         url = '',
       },
-      schemas = require('schemastore').yaml.schemas(),
+      schemas = require('schemastore').yaml.schemas {
+        extra = {
+          url = 'https://github.com/helmwave/helmwave/releases/latest/download/schema.json',
+          name = 'Helmwave',
+          description = 'Helmwave configuration',
+          fileMatch = 'helmwave.yml',
+        },
+      },
     },
   },
   lua_ls = {
     Lua = {
-      workspace = { checkThirdParty = false },
+      workspace = { checkThirdParty = true },
       telemetry = { enable = false },
     },
   },
@@ -41,7 +56,10 @@ local servers = {
 local langservers = {}
 
 -- Exclude languages that are not supported by mason
-local excluded_langservers_from_installer = { nginx_language_server = true }
+local excluded_langservers_from_installer = {
+  nginx_language_server = true,
+  earthlyls = true,
+}
 
 for key, _ in pairs(servers) do
   if (excluded_langservers_from_installer[key] or false) ~= true then
