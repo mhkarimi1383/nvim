@@ -1,6 +1,7 @@
 utils = require 'custom.utils'
 local telescope = require 'telescope'
 local telescope_builtin = require 'telescope.builtin'
+local z_utils = require 'telescope._extensions.zoxide.utils'
 
 local _M = {}
 
@@ -44,6 +45,25 @@ end
 function _M.setup()
   telescope.setup {
     extensions = {
+      ['zoxide'] = {
+        prompt_title = '[ Walking on the shoulders of TJ ]',
+        mappings = {
+          default = {
+            after_action = function(selection)
+              print('Update to (' .. selection.z_score .. ') ' .. selection.path)
+            end,
+          },
+          ['<C-s>'] = {
+            before_action = function(selection)
+              print 'before C-s'
+            end,
+            action = function(selection)
+              vim.cmd.edit(selection.path)
+            end,
+          },
+          ['<C-q>'] = { action = z_utils.create_basic_command 'split' },
+        },
+      },
       ['ui-select'] = {
         require('telescope.themes').get_dropdown {
           -- even more opts
@@ -62,6 +82,7 @@ function _M.setup()
 
   pcall(telescope.load_extension, 'fzf')
   pcall(telescope.load_extension, 'ui-select')
+  pcall(telescope.load_extension, 'zoxide')
   vim.api.nvim_create_user_command('LiveGrepGitRoot', live_grep_git_root, {})
 
   vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })

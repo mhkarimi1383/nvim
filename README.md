@@ -62,8 +62,8 @@ nvim --headless "+Lazy! sync" +qa
 
 ### Recommended Setup
 
-Font: `VictorMoto Nerd Font Mono`
-Terminal: `BlackBox` (**NOTE**: Font regulations are not supported)
+Font: `ComicShannsMono Nerd Font Mono`
+Terminal: `kitty` (with my custom setup at https://github.com/mhkarimi1383/kitty)
 
 ### Configuration And Extension
 

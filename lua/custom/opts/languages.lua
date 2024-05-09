@@ -12,6 +12,7 @@ local servers = {
     filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json' },
   },
   pylsp = {},
+  jinja_lsp = {},
   pyre = {},
   helm_ls = {},
   bashls = {},
@@ -161,6 +162,13 @@ function _M.setup()
     sources = {
       { name = 'nvim_lsp' },
       { name = 'path' },
+    },
+  }
+  vim.filetype.add {
+    extension = {
+      jinja = 'jinja',
+      jinja2 = 'jinja',
+      j2 = 'jinja',
     },
   }
 end
