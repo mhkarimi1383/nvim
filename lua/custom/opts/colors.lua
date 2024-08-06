@@ -1,10 +1,16 @@
 local lualine = require 'lualine'
 local treesitter_configs = require 'nvim-treesitter.configs'
 local rainbow_delimiters = require 'rainbow-delimiters'
+local dracula = require 'dracula'
 
 local _M = {}
 
 function _M.setup()
+  dracula.setup {
+    transparent_bg = true,
+    italic_comment = true,
+    show_end_of_buffer = true,
+  }
   vim.cmd 'colorscheme dracula'
   vim.o.background = 'dark'
   lualine.setup {

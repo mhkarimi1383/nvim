@@ -1,4 +1,4 @@
-utils = require 'custom.utils'
+local utils = require 'custom.utils'
 local telescope = require 'telescope'
 local telescope_builtin = require 'telescope.builtin'
 local z_utils = require 'telescope._extensions.zoxide.utils'
