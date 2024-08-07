@@ -1,3 +1,3 @@
 return {
-  'tradiff/rainbow-delimiters.nvim',
+  'HiPhish/rainbow-delimiters.nvim',
 }

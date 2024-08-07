@@ -54,7 +54,7 @@ function _M.setup()
             end,
           },
           ['<C-s>'] = {
-            before_action = function(selection)
+            before_action = function(_)
               print 'before C-s'
             end,
             action = function(selection)

@@ -10,6 +10,8 @@ function _M.setup()
     transparent_bg = true,
     italic_comment = true,
     show_end_of_buffer = true,
+    colors = {},
+    overrides = {},
   }
   vim.cmd 'colorscheme dracula'
   vim.o.background = 'dark'
