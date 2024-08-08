@@ -54,6 +54,44 @@ local servers = {
   },
 }
 
+for k, _ in pairs(servers) do
+  servers[k]['virtual_text'] = {
+    errors = { 'italic' },
+    hints = { 'italic' },
+    warnings = { 'italic' },
+    information = { 'italic' },
+    ok = { 'italic' },
+  }
+  servers[k]['underlines'] = {
+    errors = { 'underline' },
+    hints = { 'underline' },
+    warnings = { 'underline' },
+    information = { 'underline' },
+    ok = { 'underline' },
+  }
+  servers[k]['inlay_hints'] = {
+    background = true,
+  }
+end
+vim.diagnostic.config {
+  virtual_text = {
+    errors = { 'italic' },
+    hints = { 'italic' },
+    warnings = { 'italic' },
+    information = { 'italic' },
+    ok = { 'italic' },
+  },
+  underlines = {
+    errors = { 'underline' },
+    hints = { 'underline' },
+    warnings = { 'underline' },
+    information = { 'underline' },
+    ok = { 'underline' },
+  },
+  inlay_hints = {
+    background = true,
+  },
+}
 local langservers = {}
 
 -- Exclude languages that are not supported by mason

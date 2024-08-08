@@ -1,10 +1,10 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
+vim.o.termguicolors = true
 
 local lazy = require 'custom.lazy'
 lazy.init()
 lazy.setup()
-
 require('neodev').setup()
 require('custom.opts.colors').setup()
 require('custom.opts.telescope').setup()

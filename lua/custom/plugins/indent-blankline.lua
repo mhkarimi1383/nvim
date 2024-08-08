@@ -17,15 +17,15 @@ return {
     },
     scope = {
       char = '▎',
-      highlight = {
-        'RainbowDelimiterRed',
-        'RainbowDelimiterYellow',
-        'RainbowDelimiterBlue',
-        'RainbowDelimiterOrange',
-        'RainbowDelimiterGreen',
-        'RainbowDelimiterViolet',
-        'RainbowDelimiterCyan',
-      },
+      -- highlight = {
+      --   'RainbowDelimiterRed',
+      --   'RainbowDelimiterYellow',
+      --   'RainbowDelimiterBlue',
+      --   'RainbowDelimiterOrange',
+      --   'RainbowDelimiterGreen',
+      --   'RainbowDelimiterViolet',
+      --   'RainbowDelimiterCyan',
+      -- },
     },
   },
   config = function(_, opts)
