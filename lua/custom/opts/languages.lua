@@ -1,5 +1,3 @@
-local mason = require 'mason'
-local mason_lspconfig = require 'mason-lspconfig'
 local cmp = require 'cmp'
 local luasnip = require 'luasnip'
 
@@ -94,18 +92,6 @@ vim.diagnostic.config {
 }
 local langservers = {}
 
--- Exclude languages that are not supported by mason
-local excluded_langservers_from_installer = {
-  nginx_language_server = true,
-  earthlyls = true,
-}
-
-for key, _ in pairs(servers) do
-  if (excluded_langservers_from_installer[key] or false) ~= true then
-    table.insert(langservers, key)
-  end
-end
-
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
@@ -152,22 +138,6 @@ require('which-key').add {
 }
 
 function _M.setup()
-  mason.setup()
-  mason_lspconfig.setup {
-    ensure_installed = langservers,
-  }
-
-  mason_lspconfig.setup_handlers {
-    function(server_name)
-      require('lspconfig')[server_name].setup {
-        capabilities = capabilities,
-        on_attach = on_attach,
-        settings = servers[server_name],
-        filetypes = (servers[server_name] or {}).filetypes,
-      }
-    end,
-  }
-
   require('luasnip.loaders.from_vscode').lazy_load()
   luasnip.config.setup {}
 

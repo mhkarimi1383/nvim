@@ -16,9 +16,12 @@ function _M.init()
 end
 
 function _M.setup()
-  require('lazy').setup({
-    { import = 'custom.plugins' },
-  }, {})
+  require("lazy").setup({
+    spec = {
+      { import = "custom.plugins" },
+    },
+    lockfile = vim.fn.stdpath("data") .. "lazy/lock.json",
+  })
 end
 
 return _M
