@@ -1,5 +1,7 @@
 local cmp = require 'cmp'
 local luasnip = require 'luasnip'
+local mason = require 'mason'
+local mason_lspconfig = require 'mason-lspconfig'
 
 local _M = {}
 
@@ -90,7 +92,6 @@ vim.diagnostic.config {
     background = true,
   },
 }
-local langservers = {}
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
@@ -120,24 +121,49 @@ end
 
 require('which-key').add {
   {
-    { '<leader>c', group = '[C]ode' },
+    { '<leader>c',  group = '[C]ode' },
     { '<leader>c_', hidden = true },
-    { '<leader>d', group = '[D]ocument' },
+    { '<leader>d',  group = '[D]ocument' },
     { '<leader>d_', hidden = true },
-    { '<leader>g', group = '[G]it' },
+    { '<leader>g',  group = '[G]it' },
     { '<leader>g_', hidden = true },
-    { '<leader>h', group = 'More git' },
+    { '<leader>h',  group = 'More git' },
     { '<leader>h_', hidden = true },
-    { '<leader>r', group = '[R]ename' },
+    { '<leader>r',  group = '[R]ename' },
     { '<leader>r_', hidden = true },
-    { '<leader>s', group = '[S]earch' },
+    { '<leader>s',  group = '[S]earch' },
     { '<leader>s_', hidden = true },
-    { '<leader>w', group = '[W]orkspace' },
+    { '<leader>w',  group = '[W]orkspace' },
     { '<leader>w_', hidden = true },
   },
 }
 
+local function get_keys(t)
+  local keys = {}
+  for key, _ in pairs(t) do
+    table.insert(keys, key)
+  end
+  return keys
+end
+
 function _M.setup()
+  mason.setup()
+  mason_lspconfig.setup {
+    automatic_installation = true,
+    ensure_installed = get_keys(servers),
+  }
+
+  mason_lspconfig.setup_handlers {
+    function(server_name)
+      require('lspconfig')[server_name].setup {
+        capabilities = capabilities,
+        on_attach = on_attach,
+        settings = servers[server_name],
+        filetypes = (servers[server_name] or {}).filetypes,
+      }
+    end,
+  }
+
   require('luasnip.loaders.from_vscode').lazy_load()
   luasnip.config.setup {}
 
@@ -187,6 +213,7 @@ function _M.setup()
       jinja2 = 'jinja',
       j2 = 'jinja',
     },
+    vim.filetype.add({ pattern = { [".*%playbook%.*"] = "yaml.ansible" } })
   }
 end
 
