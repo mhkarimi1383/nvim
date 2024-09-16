@@ -6,7 +6,7 @@ local mason_lspconfig = require 'mason-lspconfig'
 local _M = {}
 
 local servers = {
-  nginx_language_server = {},
+  -- nginx_language_server = {},
   earthlyls = {},
   volar = {
     filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json' },
@@ -24,6 +24,7 @@ local servers = {
   sqlls = {},
   gopls = {},
   pyright = {},
+  nil_ls = {},
   jsonls = {
     json = {
       schemas = require('schemastore').json.schemas(),
