@@ -24,7 +24,15 @@ local servers = {
   sqlls = {},
   gopls = {},
   pyright = {},
-  nil_ls = {},
+  nil_ls = {
+    settings = {
+      ['nil'] = {
+        formatting = {
+          command = { "nixfmt" },
+        },
+      },
+    },
+  },
   jsonls = {
     json = {
       schemas = require('schemastore').json.schemas(),
