@@ -62,7 +62,7 @@ nvim --headless "+Lazy! sync" +qa
 
 ### Recommended Setup
 
-Font: `RecMono Nerd Font Mono`
+Font: `Recusrive Nerd Font Mono`
 Terminal: `kitty` (with my custom setup at https://github.com/mhkarimi1383/kitty)
 
 ### Configuration And Extension
