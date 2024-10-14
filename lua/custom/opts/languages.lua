@@ -8,10 +8,10 @@ local _M = {}
 local servers = {
   -- nginx_language_server = {},
   earthlyls = {},
-  volar = {
-    filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json' },
-  },
   pylsp = {},
+  ts_ls = {
+    filetypes = { "typescript", "typescriptreact", "typescript.tsx" },
+  },
   jinja_lsp = {},
   pyre = {},
   helm_ls = {},
