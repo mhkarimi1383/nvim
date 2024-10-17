@@ -232,6 +232,7 @@ function _M.setup()
       [".*/playbooks/.*%.ya?ml"] = "yaml.ansible",
       [".*/roles/.*/tasks/.*%.ya?ml"] = "yaml.ansible",
       [".*/roles/.*/handlers/.*%.ya?ml"] = "yaml.ansible",
+      [".*/roles/.*/vars/.*%.ya?ml"] = "yaml.ansible",
       [".*/tasks/.*%.ya?ml"] = "yaml.ansible",
     },
   })

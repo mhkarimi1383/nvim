@@ -1,3 +1,0 @@
-return {
-  "HiPhish/jinja.vim"
-}
