@@ -9,8 +9,14 @@ local servers = {
   -- nginx_language_server = {},
   earthlyls = {},
   pylsp = {},
+  volar = {},
   ts_ls = {
-    filetypes = { "typescript", "typescriptreact", "typescript.tsx" },
+    filetypes = { "typescript", "typescriptreact", "typescript.tsx", "vue" },
+    init_options = {
+      name = "@vue/typescript-plugin",
+      location = "/home/karimi/.npm-packages/lib/node_modules/@vue/typescript-plugin",
+      languages = { "javascript", "typescript", "vue" },
+    },
   },
   jinja_lsp = {},
   pyre = {},
