@@ -16,6 +16,7 @@ return {
     'jay-babu/mason-nvim-dap.nvim',
     -- Add your own debuggers here
     'leoluz/nvim-dap-go',
+    "mfussenegger/nvim-dap-python"
   },
   config = function()
     local dap = require 'dap'
@@ -77,5 +78,13 @@ return {
 
     -- Install golang specific config
     require('dap-go').setup()
+    require("dap-python").setup()
+    table.insert(require('dap').configurations.python, {
+      type = 'python',
+      request = 'launch',
+      name = 'Launch python Without justMyCode',
+      program = '${file}',
+      justMyCode = false,
+    })
   end,
 }
