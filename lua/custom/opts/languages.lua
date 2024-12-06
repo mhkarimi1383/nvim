@@ -162,6 +162,11 @@ local function get_keys(t)
 end
 
 function _M.setup()
+  require('which-key').setup({
+    triggers_blacklist = {
+      n = { "d", "y" }
+    }
+  })
   mason.setup()
   mason_lspconfig.setup {
     automatic_installation = true,
