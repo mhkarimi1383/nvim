@@ -140,6 +140,7 @@ function _M.setup()
       ensure_installed = {
         'c',
         'markdown',
+        'markdown_inline',
         'cpp',
         'go',
         'lua',
