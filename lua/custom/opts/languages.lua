@@ -111,7 +111,7 @@ vim.diagnostic.config {
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
-local on_attach = function(_, bufnr)
+local on_attach = function(client, bufnr)
   require('custom.opts.telescope').setup_lsp_maps(bufnr)
   local nmap = require('custom.utils').nmap
   nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame', bufnr)
@@ -132,6 +132,22 @@ local on_attach = function(_, bufnr)
   vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
     vim.lsp.buf.format()
   end, { desc = 'Format current buffer with LSP' })
+
+  local function stringExistsInTable(str, tbl)
+    for _, value in ipairs(tbl) do
+      if value == str then
+        return true
+      end
+    end
+    return false
+  end
+  if client.name == "yamlls" then
+    if stringExistsInTable(vim.api.nvim_buf_get_option(bufnr, "filetype"), { "helm", "smarty" }) then
+      vim.schedule(function()
+        vim.cmd("LspStop ++force yamlls")
+      end)
+    end
+  end
 end
 
 require('which-key').add {
@@ -247,23 +263,6 @@ function _M.setup()
       [".*/tasks/.*%.ya?ml"] = "yaml.ansible",
     },
   })
-  local function stringExistsInTable(str, tbl)
-    for _, value in ipairs(tbl) do
-      if value == str then
-        return true
-      end
-    end
-    return false
-  end
-  require("lazyvim.util").lsp.on_attach(function(client, buffer)
-    if client.name == "yamlls" then
-      if stringExistsInTable(vim.api.nvim_buf_get_option(buffer, "filetype"), { "helm", "smarty" }) then
-        vim.schedule(function()
-          vim.cmd("LspStop ++force yamlls")
-        end)
-      end
-    end
-  end)
 end
 
 return _M
