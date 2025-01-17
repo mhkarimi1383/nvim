@@ -247,6 +247,23 @@ function _M.setup()
       [".*/tasks/.*%.ya?ml"] = "yaml.ansible",
     },
   })
+  local function stringExistsInTable(str, tbl)
+    for _, value in ipairs(tbl) do
+      if value == str then
+        return true
+      end
+    end
+    return false
+  end
+  require("lazyvim.util").lsp.on_attach(function(client, buffer)
+    if client.name == "yamlls" then
+      if stringExistsInTable(vim.api.nvim_buf_get_option(buffer, "filetype"), { "helm", "smarty" }) then
+        vim.schedule(function()
+          vim.cmd("LspStop ++force yamlls")
+        end)
+      end
+    end
+  end)
 end
 
 return _M
