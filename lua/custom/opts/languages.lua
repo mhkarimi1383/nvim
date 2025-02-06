@@ -180,7 +180,6 @@ local function get_keys(t)
 end
 
 function _M.setup()
-  require('java').setup()
   require('which-key').setup({
     triggers_blacklist = {
       n = { "d", "y" }
