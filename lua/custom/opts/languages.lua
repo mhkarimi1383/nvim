@@ -18,6 +18,7 @@ local servers = {
       languages = { "javascript", "typescript", "vue" },
     },
   },
+  java_language_server = {},
   jinja_lsp = {},
   pyre = {},
   helm_ls = {},
