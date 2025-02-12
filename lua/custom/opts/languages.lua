@@ -18,7 +18,9 @@ local servers = {
       languages = { "javascript", "typescript", "vue" },
     },
   },
-  java_language_server = {},
+  java_language_server = {
+    version = "master"
+  },
   jdtls = {},
   jinja_lsp = {},
   pyre = {},
@@ -173,8 +175,14 @@ require('which-key').add {
 
 local function get_keys(t)
   local keys = {}
-  for key, _ in pairs(t) do
-    table.insert(keys, key)
+  for key, v in pairs(t) do
+    local k = key
+    for conf, value in pairs(v) do
+      if conf == "version" then
+        k = k .. "@" .. value
+      end
+    end
+    table.insert(keys, k)
   end
   return keys
 end
