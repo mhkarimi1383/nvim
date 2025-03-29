@@ -34,6 +34,7 @@ local servers = {
   sqlls = {},
   gopls = {},
   pyright = {},
+  ruff_lsp = {},
   nil_ls = {
     settings = {
       ['nil'] = {
