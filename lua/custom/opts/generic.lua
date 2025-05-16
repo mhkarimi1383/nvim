@@ -16,7 +16,7 @@ function _M.setup()
   vim.o.completeopt = 'menuone,noselect'
   vim.o.termguicolors = true
   vim.o.guicursor =
-    'n-v-c-sm:block,i-ci-ve:hor20,r-cr-o:hor20,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor,sm:block-blinkwait175-blinkoff150-blinkon175'
+  'n-v-c-sm:block,i-ci-ve:hor20,r-cr-o:hor20,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor,sm:block-blinkwait175-blinkoff150-blinkon175'
   vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
   vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
   vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
@@ -24,6 +24,23 @@ function _M.setup()
   vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
   vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
   vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
+  require("origami").setup {
+    keepFoldsAcrossSessions = package.loaded["ufo"] ~= nil,
+    pauseFoldsOnSearch = true,
+    foldtextWithLineCount = {
+      enabled = package.loaded["ufo"] == nil,
+      template = "   %s lines", -- `%s` gets the number of folded lines
+      hlgroupForCount = "Comment",
+    },
+    foldKeymaps = {
+      setup = true, -- modifies `h` and `l`
+      hOnlyOpensOnFirstColumn = false,
+    },
+    autoFold = {
+      enabled = false,
+      kinds = { "comment", "imports" }, ---@type lsp.FoldingRangeKind[]
+    },
+  }
 end
 
 return _M
