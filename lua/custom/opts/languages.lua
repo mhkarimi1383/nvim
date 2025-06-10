@@ -195,21 +195,25 @@ function _M.setup()
     }
   })
   mason.setup()
+  local to_install = {}
+  for server_name in pairs(servers) do
+    if server_name ~= "ruff_lsp" then
+      table.insert(to_install, server_name)
+    end
+  end
   mason_lspconfig.setup {
     automatic_installation = true,
-    ensure_installed = get_keys(servers),
+    ensure_installed = to_install,
   }
 
-  mason_lspconfig.setup_handlers {
-    function(server_name)
-      require('lspconfig')[server_name].setup {
-        capabilities = capabilities,
-        on_attach = on_attach,
-        settings = servers[server_name],
-        filetypes = (servers[server_name] or {}).filetypes,
-      }
-    end,
-  }
+  for server_name, server_config in pairs(servers) do
+    vim.lsp.config(server_name, {
+      settings = server_config,
+      on_attach = on_attach,
+      capabilities = capabilities,
+      filetypes = (servers[server_name] or {}).filetypes,
+    })
+  end
 
   require('luasnip.loaders.from_vscode').lazy_load()
   luasnip.config.setup {}

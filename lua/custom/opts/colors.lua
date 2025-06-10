@@ -48,7 +48,7 @@ function _M.setup()
       dap = true,
       treesitter = true,
       notify = true,
-      mason = false,
+      mason = true,
       fzf = true,
       neotree = true,
       cmp = true,
