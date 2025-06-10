@@ -1,5 +1,4 @@
 local cmp = require 'cmp'
-local luasnip = require 'luasnip'
 local mason = require 'mason'
 local mason_lspconfig = require 'mason-lspconfig'
 
@@ -9,7 +8,7 @@ local servers = {
   -- nginx_language_server = {},
   earthlyls = {},
   pylsp = {},
-  volar = {},
+  vue_ls = {},
   ts_ls = {
     filetypes = { "typescript", "typescriptreact", "typescript.tsx", "vue" },
     init_options = {
@@ -114,7 +113,6 @@ vim.diagnostic.config {
 }
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
 local on_attach = function(client, bufnr)
   require('custom.opts.telescope').setup_lsp_maps(bufnr)
@@ -215,13 +213,9 @@ function _M.setup()
     })
   end
 
-  require('luasnip.loaders.from_vscode').lazy_load()
-  luasnip.config.setup {}
-
   cmp.setup {
     snippet = {
       expand = function(args)
-        luasnip.lsp_expand(args.body)
       end,
     },
     mapping = cmp.mapping.preset.insert {
@@ -237,8 +231,6 @@ function _M.setup()
       ['<Tab>'] = cmp.mapping(function(fallback)
         if cmp.visible() then
           cmp.select_next_item()
-        elseif luasnip.expand_or_locally_jumpable() then
-          luasnip.expand_or_jump()
         else
           fallback()
         end
@@ -246,8 +238,6 @@ function _M.setup()
       ['<S-Tab>'] = cmp.mapping(function(fallback)
         if cmp.visible() then
           cmp.select_prev_item()
-        elseif luasnip.locally_jumpable(-1) then
-          luasnip.jump(-1)
         else
           fallback()
         end
