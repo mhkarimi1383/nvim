@@ -24,6 +24,9 @@ function _M.setup()
   vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
   vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
   vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
+  vim.keymap.set('n', '<leader>db', function()
+    require('dropbar.api').pick()
+  end, { desc = 'Dropbar: pick from breadcrumb' })
   require("origami").setup {
     keepFoldsAcrossSessions = package.loaded["ufo"] ~= nil,
     pauseFoldsOnSearch = true,
