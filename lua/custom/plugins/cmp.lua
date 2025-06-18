@@ -4,7 +4,14 @@ return {
 	-- build = 'nix run .#build-plugin',
 	version = "1.*",
 	opts = {
-		completion = { documentation = { auto_show = true } },
+		completion = {
+			documentation = { auto_show = true },
+			trigger = {
+				show_on_backspace = true,
+				show_on_backspace_in_keyword = true,
+				show_on_insert = true
+			}
+		},
 		fuzzy = { implementation = "prefer_rust" },
 		sources = {
 			-- add lazydev to your completion providers

@@ -208,7 +208,7 @@ function _M.setup()
     vim.lsp.config(server_name, {
       settings = server_config,
       on_attach = on_attach,
-      capabilities = capabilities,
+      capabilities = require('blink.cmp').get_lsp_capabilities(capabilities),
       filetypes = (servers[server_name] or {}).filetypes,
     })
   end
