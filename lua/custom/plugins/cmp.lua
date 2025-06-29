@@ -1,30 +1,38 @@
 return {
-	"saghen/blink.cmp",
-	dependencies = { 'rafamadriz/friendly-snippets' },
-	-- build = 'nix run .#build-plugin',
-	version = "1.*",
-	opts = {
-		completion = {
-			documentation = { auto_show = true },
-			trigger = {
-				show_on_backspace = true,
-				show_on_backspace_in_keyword = true,
-				show_on_insert = true
+	"hrsh7th/nvim-cmp",
+	dependencies = {
+		{
+			'gbprod/yanky.nvim',
+			opts = {
+				ring = { storage = "shada" },
 			}
 		},
-		fuzzy = { implementation = "prefer_rust" },
-		sources = {
-			-- add lazydev to your completion providers
-			default = { "lazydev", "lsp", "path", "snippets", "buffer" },
-			providers = {
-				lazydev = {
-					name = "LazyDev",
-					module = "lazydev.integrations.blink",
-					-- make lazydev completions top priority (see `:h blink.cmp`)
-					score_offset = 100,
-				},
-			},
-		},
+		'hrsh7th/cmp-nvim-lsp',
+		'hrsh7th/cmp-buffer',
+		'hrsh7th/cmp-path',
+		'hrsh7th/cmp-cmdline',
+		'hrsh7th/nvim-cmp',
+		'hrsh7th/cmp-vsnip',
+		'hrsh7th/vim-vsnip',
+		'crazyhulk/cmp-sign',
+		'hrsh7th/cmp-nvim-lsp-document-symbol',
+		'hrsh7th/cmp-nvim-lsp-signature-help',
+		'samiulsami/cmp-go-deep',
+		'petertriho/cmp-git',
+		'Dynge/gitmoji.nvim',
+		'dmitmel/cmp-cmdline-history',
+		'teramako/cmp-cmdline-prompt.nvim',
+		'tzachar/fuzzy.nvim',
+		'tzachar/cmp-fuzzy-buffer',
+		'tzachar/cmp-fuzzy-path',
+		'lukas-reineke/cmp-rg',
+		'chrisgrieser/cmp-nerdfont',
+		'hrsh7th/cmp-emoji',
+		'Snikimonkd/cmp-go-pkgs',
+		'vrslev/cmp-pypi',
+		'ray-x/cmp-treesitter',
+		'ray-x/cmp-sql',
+		'chrisgrieser/cmp_yanky',
+		'SergioRibera/cmp-dotenv'
 	},
-	opts_extend = { "sources.default" }
 }

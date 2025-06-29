@@ -112,8 +112,6 @@ vim.diagnostic.config {
   },
 }
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-
 local on_attach = function(client, bufnr)
   require('custom.opts.telescope').setup_lsp_maps(bufnr)
   local nmap = require('custom.utils').nmap
@@ -208,12 +206,54 @@ function _M.setup()
     vim.lsp.config(server_name, {
       settings = server_config,
       on_attach = on_attach,
-      capabilities = require('blink.cmp').get_lsp_capabilities(capabilities),
+      capabilities = require('cmp_nvim_lsp').default_capabilities(),
       filetypes = (servers[server_name] or {}).filetypes,
     })
   end
+  local kind_icons = {
+    Text = "",
+    Method = "󰆧",
+    Function = "󰊕",
+    Constructor = "",
+    Field = "󰇽",
+    Variable = "󰂡",
+    Class = "󰠱",
+    Interface = "",
+    Module = "",
+    Property = "󰜢",
+    Unit = "",
+    Value = "󰎠",
+    Enum = "",
+    Keyword = "󰌋",
+    Snippet = "",
+    Color = "󰏘",
+    File = "󰈙",
+    Reference = "",
+    Folder = "󰉋",
+    EnumMember = "",
+    Constant = "󰏿",
+    Struct = "",
+    Event = "",
+    Operator = "󰆕",
+    TypeParameter = "󰅲",
+  }
 
   cmp.setup {
+    formatting = {
+      format = function(entry, vim_item)
+        -- Kind icons
+        vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind) -- This concatenates the icons with the name of the item kind
+        -- Source
+        vim_item.menu = ({
+          buffer = "[Buffer]",
+          nvim_lsp = "[LSP]",
+          luasnip = "[LuaSnip]",
+          nvim_lua = "[Lua]",
+          latex_symbols = "[LaTeX]",
+        })[entry.source.name]
+        return vim_item
+      end
+    },
     snippet = {
       expand = function(args)
       end,
@@ -246,6 +286,27 @@ function _M.setup()
     sources = {
       { name = 'nvim_lsp' },
       { name = 'path' },
+      { name = 'cmp-sign' },
+      { name = 'vsnip' },
+      { name = 'nvim_lsp_document_symbol' },
+      { name = 'nvim_lsp_signature_help' },
+      { name = 'go_deep' },
+      { name = 'git' },
+      { name = 'gitmoji' },
+      { name = 'cmdline' },
+      { name = 'cmp-cmdline-history' },
+      { name = 'cmp-cmdline-prompt' },
+      { name = 'fuzzy_buffer' },
+      { name = 'fuzzy_path' },
+      { name = 'rg' },
+      { name = 'nerdfont' },
+      { name = 'emoji' },
+      { name = 'go packages' },
+      { name = 'pypi' },
+      { name = 'treesitter' },
+      { name = 'sql' },
+      { name = 'cmp_yanky' },
+      { name = 'dotenv' }
     },
   }
   vim.filetype.add {
