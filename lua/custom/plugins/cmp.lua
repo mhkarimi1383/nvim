@@ -7,6 +7,7 @@ return {
 				ring = { storage = "shada" },
 			}
 		},
+		'onsails/lspkind.nvim',
 		'hrsh7th/cmp-nvim-lsp',
 		'hrsh7th/cmp-buffer',
 		'hrsh7th/cmp-path',
