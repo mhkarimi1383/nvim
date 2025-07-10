@@ -30,10 +30,15 @@ function _M.setup()
   require("origami").setup {
     keepFoldsAcrossSessions = package.loaded["ufo"] ~= nil,
     pauseFoldsOnSearch = true,
-    foldtextWithLineCount = {
-      enabled = package.loaded["ufo"] == nil,
-      template = "   %s lines", -- `%s` gets the number of folded lines
-      hlgroupForCount = "Comment",
+    foldtext = {
+      enabled = true,
+      padding = 3,
+      lineCount = {
+        template = "%d lines", -- `%s` gets the number of folded lines
+        hlgroupForCount = "Comment",
+      },
+      diagnosticsCount = true,
+      gitsignsCount = true
     },
     foldKeymaps = {
       setup = true, -- modifies `h` and `l`
