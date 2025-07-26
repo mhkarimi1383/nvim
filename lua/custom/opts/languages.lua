@@ -240,6 +240,9 @@ function _M.setup()
   }
 
   cmp.setup {
+    completion = {
+      autocomplete = false,
+    },
     formatting = {
       format = lspkind.cmp_format({
         mode = 'symbol_text', -- show only symbol annotations
