@@ -27,28 +27,6 @@ function _M.setup()
   vim.keymap.set('n', '<leader>db', function()
     require('dropbar.api').pick()
   end, { desc = 'Dropbar: pick from breadcrumb' })
-  require("origami").setup {
-    keepFoldsAcrossSessions = package.loaded["ufo"] ~= nil,
-    pauseFoldsOnSearch = true,
-    foldtext = {
-      enabled = true,
-      padding = 3,
-      lineCount = {
-        template = "%d lines", -- `%s` gets the number of folded lines
-        hlgroupForCount = "Comment",
-      },
-      diagnosticsCount = true,
-      gitsignsCount = true
-    },
-    foldKeymaps = {
-      setup = true, -- modifies `h` and `l`
-      hOnlyOpensOnFirstColumn = false,
-    },
-    autoFold = {
-      enabled = false,
-      kinds = { "comment", "imports" }, ---@type lsp.FoldingRangeKind[]
-    },
-  }
   require("netrw").setup({
     -- File icons to use when `use_devicons` is false or if
     -- no icon is found for the given file type.
@@ -73,7 +51,7 @@ function _M.setup()
     callback = function(ev)
       local client = vim.lsp.get_client_by_id(ev.data.client_id)
       local value = ev.data.params
-      .value --[[@as {percentage?: number, title?: string, message?: string, kind: "begin" | "report" | "end"}]]
+          .value --[[@as {percentage?: number, title?: string, message?: string, kind: "begin" | "report" | "end"}]]
       if not client or type(value) ~= "table" then
         return
       end

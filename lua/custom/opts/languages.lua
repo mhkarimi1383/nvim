@@ -68,6 +68,13 @@ local servers = {
   },
   lua_ls = {
     Lua = {
+      format = {
+        enable = true,
+        defaultConfig = {
+          indent_style = "space",
+          indent_size = "2",
+        },
+      },
       workspace = { checkThirdParty = true },
       telemetry = { enable = false },
     },
@@ -171,19 +178,7 @@ require('which-key').add {
   },
 }
 
-local function get_keys(t)
-  local keys = {}
-  for key, v in pairs(t) do
-    local k = key
-    for conf, value in pairs(v) do
-      if conf == "version" then
-        k = k .. "@" .. value
-      end
-    end
-    table.insert(keys, k)
-  end
-  return keys
-end
+local cmp_select = { behavior = cmp.SelectBehavior.Select }
 
 function _M.setup()
   require('which-key').setup({
@@ -240,9 +235,6 @@ function _M.setup()
   }
 
   cmp.setup {
-    completion = {
-      autocomplete = false,
-    },
     formatting = {
       format = lspkind.cmp_format({
         mode = 'symbol_text', -- show only symbol annotations
@@ -269,31 +261,12 @@ function _M.setup()
       expand = function(args)
       end,
     },
-    mapping = cmp.mapping.preset.insert {
-      ['<C-n>'] = cmp.mapping.select_next_item(),
-      ['<C-p>'] = cmp.mapping.select_prev_item(),
-      ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-      ['<C-f>'] = cmp.mapping.scroll_docs(4),
-      ['<C-Space>'] = cmp.mapping.complete {},
-      ['<CR>'] = cmp.mapping.confirm {
-        behavior = cmp.ConfirmBehavior.Replace,
-        select = true,
-      },
-      ['<Tab>'] = cmp.mapping(function(fallback)
-        if cmp.visible() then
-          cmp.select_next_item()
-        else
-          fallback()
-        end
-      end, { 'i', 's' }),
-      ['<S-Tab>'] = cmp.mapping(function(fallback)
-        if cmp.visible() then
-          cmp.select_prev_item()
-        else
-          fallback()
-        end
-      end, { 'i', 's' }),
-    },
+    mapping = cmp.mapping.preset.insert({
+      ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
+      ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
+      ['<C-y>'] = cmp.mapping.confirm({ select = true }),
+      ["<C-Space>"] = cmp.mapping.complete(),
+    }),
     sources = {
       { name = 'nvim_lsp' },
       { name = 'path' },
