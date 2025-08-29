@@ -7,6 +7,7 @@ return {
 				ring = { storage = "shada" },
 			}
 		},
+		'windwp/nvim-autopairs',
 		'onsails/lspkind.nvim',
 		'hrsh7th/cmp-nvim-lsp',
 		'hrsh7th/cmp-buffer',
