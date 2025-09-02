@@ -66,6 +66,7 @@ local servers = {
       },
     },
   },
+  protols = {},
   lua_ls = {
     Lua = {
       format = {

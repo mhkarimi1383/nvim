@@ -202,6 +202,7 @@ function _M.setup()
         'jsonc',
         'ini',
         'jq',
+        "proto"
       },
 
       rainbow = {
