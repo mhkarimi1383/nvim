@@ -14,7 +14,7 @@ function _M.setup()
       dark = 'mocha',
     },
     float = {
-      transparent = false,
+      transparent = true,
       solid = true,
     },
     transparent_background = true, -- disables setting the background color.
@@ -44,7 +44,12 @@ function _M.setup()
       -- miscs = {}, -- Uncomment to turn off hard-coded styles
     },
     color_overrides = {},
-    custom_highlights = {},
+    custom_highlights = function(colors)
+      return {
+        NeoTreeCursorLine = { bg = colors.surface1, fg = colors.none },
+        NeoTreePreview = { bg = colors.surface1, fg = colors.none },
+      }
+    end,
     default_integrations = true,
     integrations = {
       gitsigns = true,
@@ -64,7 +69,7 @@ function _M.setup()
       },
       indent_blankline = {
         enabled = true,
-        scope_color = '', -- catppuccin color (eg. `lavender`) Default: text
+        scope_color = 'lavender',
         colored_indent_levels = true,
       },
       native_lsp = {
