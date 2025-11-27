@@ -19,7 +19,6 @@ return {
 		'crazyhulk/cmp-sign',
 		'hrsh7th/cmp-nvim-lsp-document-symbol',
 		'hrsh7th/cmp-nvim-lsp-signature-help',
-		'samiulsami/cmp-go-deep',
 		'petertriho/cmp-git',
 		'Dynge/gitmoji.nvim',
 		'dmitmel/cmp-cmdline-history',

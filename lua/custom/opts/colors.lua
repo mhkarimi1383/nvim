@@ -52,6 +52,7 @@ function _M.setup()
     end,
     default_integrations = true,
     integrations = {
+      barbar = true,
       gitsigns = true,
       nvimtree = true,
       dap = true,
@@ -101,7 +102,7 @@ function _M.setup()
         enabled = true,
         color_mode = true,
       },
-      copilot_vim = true,
+      copilot_vim = false,
       -- For more plugins integrations please scroll down (https://github.com/catppuccin/nvim#integrations)
     },
   }
