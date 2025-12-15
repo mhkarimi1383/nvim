@@ -102,7 +102,7 @@ function _M.setup()
         enabled = true,
         color_mode = true,
       },
-      copilot_vim = false,
+      copilot_vim = true,
       -- For more plugins integrations please scroll down (https://github.com/catppuccin/nvim#integrations)
     },
   }
