@@ -4,3 +4,4 @@
 --     require("supermaven-nvim").setup({})
 --   end,
 -- }
+return {}
