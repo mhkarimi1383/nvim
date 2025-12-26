@@ -154,7 +154,7 @@ local on_attach = function(client, bufnr)
     return false
   end
   if client.name == "yamlls" then
-    if stringExistsInTable(vim.api.nvim_buf_get_option(bufnr, "filetype"), { "helm", "smarty" }) then
+    if stringExistsInTable(vim.api.nvim_get_option_value("filetype", { buf = bufnr }), { "helm", "smarty" }) then
       vim.schedule(function()
         vim.cmd("LspStop ++force yamlls")
       end)
@@ -209,33 +209,6 @@ function _M.setup()
       filetypes = (servers[server_name] or {}).filetypes,
     })
   end
-  local kind_icons = {
-    Text = "",
-    Method = "󰆧",
-    Function = "󰊕",
-    Constructor = "",
-    Field = "󰇽",
-    Variable = "󰂡",
-    Class = "󰠱",
-    Interface = "",
-    Module = "",
-    Property = "󰜢",
-    Unit = "",
-    Value = "󰎠",
-    Enum = "",
-    Keyword = "󰌋",
-    Snippet = "",
-    Color = "󰏘",
-    File = "󰈙",
-    Reference = "",
-    Folder = "󰉋",
-    EnumMember = "",
-    Constant = "󰏿",
-    Struct = "",
-    Event = "",
-    Operator = "󰆕",
-    TypeParameter = "󰅲",
-  }
 
   cmp.setup {
     formatting = {
@@ -273,7 +246,6 @@ function _M.setup()
       { name = 'nvim_lsp' },
       { name = 'path' },
       { name = 'cmp-sign' },
-      { name = 'vsnip' },
       { name = 'nvim_lsp_document_symbol' },
       { name = 'nvim_lsp_signature_help' },
       { name = 'go_deep' },
@@ -284,7 +256,6 @@ function _M.setup()
       { name = 'cmp-cmdline-prompt' },
       { name = 'fuzzy_buffer' },
       { name = 'fuzzy_path' },
-      { name = 'rg' },
       { name = 'nerdfont' },
       { name = 'emoji' },
       { name = 'go packages' },

@@ -5,7 +5,6 @@ vim.o.termguicolors = true
 local lazy = require 'custom.lazy'
 lazy.init()
 lazy.setup()
-
 require('custom.opts.telescope').setup()
 require('custom.opts.generic').setup()
 require('custom.opts.languages').setup()
