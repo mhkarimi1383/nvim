@@ -15,6 +15,24 @@ function _M.setup()
   vim.o.timeoutlen = 300
   vim.o.completeopt = 'menuone,noselect'
   vim.o.termguicolors = true
+  vim.wo.spell = true
+  vim.opt.list = true
+  vim.opt.listchars = {
+      space = "⋅",
+      eol = "↴",
+      tab = "▎_",
+      trail = "•",
+      extends = "❯",
+      precedes = "❮",
+      nbsp = "",
+  }
+  vim.opt.fillchars = {
+      fold = " ",
+      foldsep = " ",
+      foldopen = "",
+      foldclose = "",
+      diff = "╱",
+  }
   vim.o.guicursor =
   'n-v-c-sm:block,i-ci-ve:hor20,r-cr-o:hor20,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor,sm:block-blinkwait175-blinkoff150-blinkon175'
   vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
