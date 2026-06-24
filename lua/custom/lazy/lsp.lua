@@ -315,5 +315,25 @@ return {
 				SymbolKind.TypeParameter,
 			},
 		})
+		vim.filetype.add({
+			extension = {
+				jinja = "jinja",
+				jinja2 = "jinja",
+				j2 = "jinja",
+			},
+		})
+		vim.filetype.add({
+			pattern = {
+				[".*/host_vars/.*%.ya?ml"] = "yaml.ansible",
+				[".*/group_vars/.*%.ya?ml"] = "yaml.ansible",
+				[".*/group_vars/.*/.*%.ya?ml"] = "yaml.ansible",
+				[".*/playbook.*%.ya?ml"] = "yaml.ansible",
+				[".*/playbooks/.*%.ya?ml"] = "yaml.ansible",
+				[".*/roles/.*/tasks/.*%.ya?ml"] = "yaml.ansible",
+				[".*/roles/.*/handlers/.*%.ya?ml"] = "yaml.ansible",
+				[".*/roles/.*/vars/.*%.ya?ml"] = "yaml.ansible",
+				[".*/tasks/.*%.ya?ml"] = "yaml.ansible",
+			},
+		})
 	end,
 }
