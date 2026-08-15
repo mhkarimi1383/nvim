@@ -80,6 +80,7 @@ return {
 				"tailwindcss",
 				"basedpyright",
 				"ruff",
+				"nil_ls",
 			},
 			handlers = {
 				function(server_name) -- default handler (optional)

@@ -1,11 +1,11 @@
 return {
-	"catppuccin/nvim",
+	"rose-pine/neovim",
 	dependencies = {
 		"HiPhish/rainbow-delimiters.nvim",
 		"lukas-reineke/indent-blankline.nvim",
 		"lewis6991/gitsigns.nvim",
 	},
-	name = "catppuccin",
+	name = "rose-pine",
 	priority = 1000,
 	config = function()
 		require("rainbow-delimiters.setup").setup({
@@ -82,33 +82,21 @@ return {
 				col = 1,
 			},
 		})
-		require("catppuccin").setup({
-			flavour = "mocha",
-			transparent_background = true,
-			float = {
-				transparent = false,
-				solid = true,
+		require("rose-pine").setup({
+			variant = "moon",
+			dark_variant = "moon",
+			dim_inactive_windows = true,
+			enable = {
+				terminal = true,
+				legacy_highlights = true, -- Improve compatibility for previous versions of Neovim
+				migrations = true, -- Handle deprecated options automatically
 			},
-			dim_inactive = {
-				enabled = true,
-			},
-			integrations = {
-				neotest = false,
-				cmp = true,
-				dap = true,
-				dap_ui = true,
-				gitsigns = true,
-				telescope = {
-					enabled = true,
-				},
-				rainbow_delimiters = true,
-				indent_blankline = {
-					enabled = true,
-					scope_color = "lavender",
-					colored_indent_levels = true,
-				},
+			styles = {
+				bold = true,
+				italic = true,
+				transparency = true,
 			},
 		})
-		vim.cmd.colorscheme("catppuccin-nvim")
+		vim.cmd.colorscheme("rose-pine-moon")
 	end,
 }
