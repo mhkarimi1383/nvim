@@ -237,15 +237,37 @@ return {
 				prefix = "",
 			},
 		})
-		local function h(name)
-			return vim.api.nvim_get_hl(0, { name = name })
+		local rp = require("rose-pine.palette")
+		local function set_symbol_usage_hl()
+			vim.api.nvim_set_hl(0, "SymbolUsageContent", {
+				fg = rp.subtle,
+				bg = vim.api.nvim_get_hl(0, { name = "CursorLine", link = false }).bg,
+			})
+			vim.api.nvim_set_hl(0, "SymbolUsageRounding", {
+				-- fg = rp.subtle,
+				fg = vim.api.nvim_get_hl(0, { name = "CursorLine", link = false }).bg,
+			})
+			vim.api.nvim_set_hl(0, "SymbolUsageRef", {
+				fg = rp.rose,
+				bg = vim.api.nvim_get_hl(0, { name = "CursorLine", link = false }).bg,
+				bold = true,
+			})
+			vim.api.nvim_set_hl(0, "SymbolUsageDef", {
+				fg = rp.iris,
+				bg = vim.api.nvim_get_hl(0, { name = "CursorLine", link = false }).bg,
+				bold = true,
+			})
+			vim.api.nvim_set_hl(0, "SymbolUsageImpl", {
+				fg = rp.foam,
+				bg = vim.api.nvim_get_hl(0, { name = "CursorLine", link = false }).bg,
+				bold = true,
+			})
 		end
-		vim.api.nvim_set_hl(0, "SymbolUsageRounding", { fg = h("CursorLine").bg, italic = true })
-		vim.api.nvim_set_hl(0, "SymbolUsageContent", { bg = h("CursorLine").bg, fg = h("Comment").fg, italic = true })
-		vim.api.nvim_set_hl(0, "SymbolUsageRef", { fg = h("Function").fg, bg = h("CursorLine").bg, italic = true })
-		vim.api.nvim_set_hl(0, "SymbolUsageDef", { fg = h("Type").fg, bg = h("CursorLine").bg, italic = true })
-		vim.api.nvim_set_hl(0, "SymbolUsageImpl", { fg = h("@keyword").fg, bg = h("CursorLine").bg, italic = true })
-
+		set_symbol_usage_hl()
+		vim.api.nvim_create_autocmd("ColorScheme", {
+			callback = set_symbol_usage_hl,
+		})
+		vim.schedule(set_symbol_usage_hl)
 		local function text_format(symbol)
 			local res = {}
 
