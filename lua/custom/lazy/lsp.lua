@@ -237,37 +237,6 @@ return {
 				prefix = "",
 			},
 		})
-		local rp = require("rose-pine.palette")
-		local function set_symbol_usage_hl()
-			vim.api.nvim_set_hl(0, "SymbolUsageContent", {
-				fg = rp.subtle,
-				bg = vim.api.nvim_get_hl(0, { name = "CursorLine", link = false }).bg,
-			})
-			vim.api.nvim_set_hl(0, "SymbolUsageRounding", {
-				-- fg = rp.subtle,
-				fg = vim.api.nvim_get_hl(0, { name = "CursorLine", link = false }).bg,
-			})
-			vim.api.nvim_set_hl(0, "SymbolUsageRef", {
-				fg = rp.rose,
-				bg = vim.api.nvim_get_hl(0, { name = "CursorLine", link = false }).bg,
-				bold = true,
-			})
-			vim.api.nvim_set_hl(0, "SymbolUsageDef", {
-				fg = rp.iris,
-				bg = vim.api.nvim_get_hl(0, { name = "CursorLine", link = false }).bg,
-				bold = true,
-			})
-			vim.api.nvim_set_hl(0, "SymbolUsageImpl", {
-				fg = rp.foam,
-				bg = vim.api.nvim_get_hl(0, { name = "CursorLine", link = false }).bg,
-				bold = true,
-			})
-		end
-		set_symbol_usage_hl()
-		vim.api.nvim_create_autocmd("ColorScheme", {
-			callback = set_symbol_usage_hl,
-		})
-		vim.schedule(set_symbol_usage_hl)
 		local function text_format(symbol)
 			local res = {}
 
@@ -338,6 +307,37 @@ return {
 				SymbolKind.TypeParameter,
 			},
 		})
+		local function set_symbol_usage_hl()
+			local ok, rp = pcall(require, "rose-pine.palette")
+			if not ok then
+				return
+			end
+			local bg = vim.api.nvim_get_hl(0, { name = "CursorLine", link = false }).bg
+				or vim.api.nvim_get_hl(0, { name = "Normal", link = false }).bg
+
+			local set = vim.api.nvim_set_hl
+			set(0, "SymbolUsageContent", { fg = rp.subtle, bg = bg })
+			set(0, "SymbolUsageRounding", { fg = bg })
+			set(0, "SymbolUsageRef", { fg = rp.rose, bg = bg, bold = true })
+			set(0, "SymbolUsageDef", { fg = rp.iris, bg = bg, bold = true })
+			set(0, "SymbolUsageImpl", { fg = rp.foam, bg = bg, bold = true })
+		end
+
+		local group = vim.api.nvim_create_augroup("SymbolUsageHL", { clear = true })
+		vim.api.nvim_create_autocmd("ColorScheme", {
+			group = group,
+			callback = function()
+				vim.schedule(set_symbol_usage_hl)
+			end,
+		})
+		vim.api.nvim_create_autocmd({ "VimEnter", "LspAttach" }, {
+			group = group,
+			once = true,
+			callback = function()
+				vim.schedule(set_symbol_usage_hl)
+			end,
+		})
+		set_symbol_usage_hl()
 		vim.filetype.add({
 			extension = {
 				jinja = "jinja",

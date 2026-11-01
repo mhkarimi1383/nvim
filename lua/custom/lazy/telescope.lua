@@ -17,6 +17,7 @@ return {
             pickers = {
                 live_grep  = { mappings = tab_mappings },
                 find_files = { mappings = tab_mappings }, -- :Telescope fd is an alias of find_files
+                fd = { mappings = tab_mappings },
                 grep_string = { mappings = tab_mappings },
                 git_files  = { mappings = tab_mappings },
                 oldfiles   = { mappings = tab_mappings },

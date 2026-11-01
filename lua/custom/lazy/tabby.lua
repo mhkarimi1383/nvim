@@ -50,5 +50,7 @@ return {
 		  end,
 		  -- option = {}, -- setup modules' option,
 		})
+		vim.keymap.set("n", "<", "<cmd>tabprevious<cr>", { desc = "Previous tab" })
+		vim.keymap.set("n", ">", "<cmd>tabnext<cr>", { desc = "Next tab" })
 	end
 }
