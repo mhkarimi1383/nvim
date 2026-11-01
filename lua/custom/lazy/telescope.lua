@@ -8,8 +8,20 @@ return {
 	},
 
 	config = function()
-		require("telescope").setup({})
-
+		local actions = require("telescope.actions")
+        local tab_mappings = {
+            i = { ["<CR>"] = actions.select_tab },
+            n = { ["<CR>"] = actions.select_tab },
+        }
+        require("telescope").setup({
+            pickers = {
+                live_grep  = { mappings = tab_mappings },
+                find_files = { mappings = tab_mappings }, -- :Telescope fd is an alias of find_files
+                grep_string = { mappings = tab_mappings },
+                git_files  = { mappings = tab_mappings },
+                oldfiles   = { mappings = tab_mappings },
+            },
+        })
 		local preview_utils = require("telescope.previewers.utils")
 		preview_utils.ts_highlighter = function(bufnr, ft)
 			local lang = vim.treesitter.language.get_lang(ft) or ft
